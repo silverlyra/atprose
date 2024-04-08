@@ -1,0 +1,39 @@
+[workspace]
+members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+repository = "https://github.com/silverlyra/atprose"
+authors = ["Lyra Torben Naeseth <lyra@omg.lol>"]
+license = "Apache-2.0"
+
+[workspace.dependencies]
+bytes = { version = "^1.4.0" }
+derive_more = { version = "^0.99.8" }
+indexmap = { version = "^2.2.1", features = ["serde"] }
+serde = { version = "^1.0.100" }
+serde_json = { version = "^1.0.85", features = ["preserve_order"] }
+thiserror = { version = "^1.0.40" }
+tinyvec = { version = "^1.5.1" }
+tracing = { version = "^0.1.25" }
+
+# [package]
+# name = "atprose"
+# version = "0.0.1"
+# edition = "2021"
+# license = "Apache-2.0"
+# repository.workspace = true
+# authors.workspace = true
+# readme = "Readme.md"
+
+# [features]
+# alloc = []
+# default = ["std"]
+# # lang-1_75 = []
+# nightly = []
+# std = ["alloc"]
+# # tokio = ["std", "dep:tokio", "dep:tokio-util"]
+
+# [package.metadata.docs.rs]
+# all-features = true
+# rustdoc-args = ["--cfg", "docsrs"]
