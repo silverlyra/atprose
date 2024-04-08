@@ -11,7 +11,7 @@ use crate::Map;
 /// A [`record`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#record
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Record {
     #[serde(flatten)]
@@ -26,7 +26,7 @@ pub struct Record {
 /// The [key format][rkey] of a [`Record`].
 ///
 /// [rkey]: https://atproto.com/specs/record-key
-#[derive(PartialEq, Eq, Default, Debug)]
+#[derive(PartialEq, Eq, Default, Clone, Debug)]
 pub enum RecordKey {
     /// A [timestamp identifier][tid].
     ///
@@ -92,7 +92,7 @@ impl Serialize for RecordKey {
     }
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum RecordDefinition {
     Object(Object),
@@ -101,7 +101,7 @@ pub enum RecordDefinition {
 /// An [`array`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#array
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Array {
     #[serde(flatten)]
@@ -117,7 +117,7 @@ pub struct Array {
 }
 
 /// The type of an [array][Array]'s items.
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ArrayItem {
     Blob(Blob),
@@ -135,7 +135,7 @@ pub enum ArrayItem {
 /// An [`object`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#object
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Object {
     #[serde(flatten)]
@@ -151,7 +151,7 @@ pub struct Object {
 }
 
 /// A property of an [object][Object].
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum Property {
     Blob(Blob),

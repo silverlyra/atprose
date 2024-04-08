@@ -5,7 +5,7 @@ use super::meta::Metadata;
 /// A [`null`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#null
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 pub struct Null {
     #[serde(flatten)]
     pub metadata: Metadata,
@@ -14,7 +14,7 @@ pub struct Null {
 /// A [`boolean`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#boolean
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 pub struct Boolean {
     #[serde(flatten)]
     pub metadata: Metadata,
@@ -29,7 +29,7 @@ pub struct Boolean {
 /// An [`integer`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#integer
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 pub struct Integer {
     #[serde(flatten)]
     pub metadata: Metadata,
@@ -53,7 +53,7 @@ pub struct Integer {
 /// A [`string`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#string
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct String {
     #[serde(flatten)]
@@ -90,7 +90,7 @@ pub struct String {
 /// A [`String`] [format][spec].
 ///
 /// [spec]: https://atproto.com/specs/lexicon#string-formats
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "kebab-case")]
 pub enum StringFormat {
     /// Either a [DID][] or a [handle][].
@@ -136,7 +136,7 @@ pub enum StringFormat {
 /// A [`blob`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#blob
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Blob {
     #[serde(flatten)]
@@ -152,7 +152,7 @@ pub struct Blob {
 /// A [`bytes`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#bytes
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Bytes {
     #[serde(flatten)]
@@ -168,7 +168,7 @@ pub struct Bytes {
 /// A [`cid-link`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#cid-link
-#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Default, Clone, Debug)]
 pub struct Link {
     #[serde(flatten)]
     pub metadata: Metadata,

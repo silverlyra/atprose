@@ -7,7 +7,7 @@ use super::{
 };
 use crate::Map;
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Query {
     #[serde(flatten)]
@@ -23,7 +23,7 @@ pub struct Query {
     pub errors: Option<Vec<Notice>>,
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Procedure {
     #[serde(flatten)]
@@ -42,7 +42,7 @@ pub struct Procedure {
     pub errors: Option<Vec<Notice>>,
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Body {
     #[serde(flatten)]
@@ -54,7 +54,7 @@ pub struct Body {
     pub schema: Option<BodySchema>,
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum BodySchema {
     Ref(Ref),
@@ -62,14 +62,14 @@ pub enum BodySchema {
     Object(Object),
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type")]
 pub enum QuerySchema {
     #[serde(rename = "params")]
     Parameters(Parameters),
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Parameters {
     #[serde(flatten)]
@@ -81,7 +81,7 @@ pub struct Parameters {
     pub required: Vec<std::string::String>,
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ParameterValue {
     Boolean(Boolean),
@@ -91,7 +91,7 @@ pub enum ParameterValue {
     Array(ParameterArray),
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct ParameterArray {
     #[serde(flatten)]
@@ -106,7 +106,7 @@ pub struct ParameterArray {
     pub max_length: Option<usize>,
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
 pub enum ParameterArrayItem {
     Boolean(Boolean),
@@ -115,7 +115,7 @@ pub enum ParameterArrayItem {
     Unknown(Unknown),
 }
 
-#[derive(Deserialize, Serialize, PartialEq, Eq, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Notice {
     pub name: std::string::String,
