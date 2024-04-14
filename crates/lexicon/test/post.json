@@ -1,0 +1,54 @@
+{
+  "lexicon": 1,
+  "id": "dev.atprose.test.post",
+  "defs": {
+    "main": {
+      "type": "record",
+      "description": "A post on some service (for testing)",
+      "key": "tid",
+      "record": {
+        "type": "object",
+        "required": [
+          "id",
+          "body"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "unique ID"
+          },
+          "body": {
+            "type": "ref",
+            "ref": "#body"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "datetime"
+          }
+        }
+      }
+    },
+    "body": {
+      "type": "object",
+      "required": [
+        "text"
+      ],
+      "properties": {
+        "text": {
+          "type": "string",
+          "maxLength": 3000,
+          "maxGraphemes": 300
+        },
+        "languages": {
+          "type": "array",
+          "maxLength": 3,
+          "items": {
+            "type": "string",
+            "format": "language",
+            "maxLength": 5
+          }
+        }
+      }
+    }
+  }
+}

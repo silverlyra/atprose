@@ -45,6 +45,20 @@ impl Document {
             .iter()
             .map(|(name, def)| (TypeId::of(&self.id, name), def))
     }
+
+    pub fn into_types(self) -> impl Iterator<Item = (TypeId, Definition)> {
+        let nsid = self.id.clone();
+
+        self.defs.into_iter().map(move |(name, def)| {
+            let name = (name != "main").then_some(name);
+            let id = TypeId {
+                ns: nsid.clone(),
+                name,
+            };
+
+            (id, def)
+        })
+    }
 }
 
 /// Lexicon language version used in a [`Document`].
@@ -78,4 +92,22 @@ pub enum Definition {
 
     Ref(Ref),
     Union(Union),
+}
+
+#[cfg(test)]
+mod test {
+    use serde_json::from_str;
+
+    use super::Document;
+
+    static POST: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/test/post.json"));
+    static POST_DEBUG: &str = include_str!(concat!(env!("CARGO_MANIFEST_DIR"), "/test/post.out"));
+
+    #[test]
+    fn test_post() {
+        let document: Document = from_str(POST).expect("failed to deserialize test/post.json");
+
+        let expected = format!("{:#?}\n", &document);
+        assert_eq!(expected.as_str(), POST_DEBUG);
+    }
 }

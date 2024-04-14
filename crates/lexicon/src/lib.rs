@@ -3,3 +3,10 @@
 pub mod schema;
 
 pub use indexmap::{IndexMap as Map, IndexSet as Set};
+
+#[cfg(feature = "load")]
+mod load;
+
+#[cfg(feature = "load")]
+#[cfg_attr(docsrs, doc(cfg(feature = "load")))]
+pub use load::{load, load_document};

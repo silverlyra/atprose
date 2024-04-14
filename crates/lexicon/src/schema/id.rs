@@ -29,6 +29,14 @@ impl Nsid {
     }
 }
 
+impl<S: Into<String>> From<(S, S)> for Nsid {
+    fn from(value: (S, S)) -> Self {
+        let (authority, package) = value;
+
+        Nsid::new(authority, package)
+    }
+}
+
 impl FromStr for Nsid {
     type Err = (); // TODO(lyra)
 

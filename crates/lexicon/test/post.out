@@ -1,0 +1,152 @@
+Document {
+    version: Version(
+        1,
+    ),
+    id: Nsid {
+        authority: "dev.atprose.test",
+        package: "post",
+    },
+    revision: None,
+    metadata: Metadata {
+        description: None,
+    },
+    defs: {
+        "main": Record(
+            Record {
+                metadata: Metadata {
+                    description: Some(
+                        "A post on some service (for testing)",
+                    ),
+                },
+                key: Tid,
+                def: Object(
+                    Object {
+                        metadata: Metadata {
+                            description: None,
+                        },
+                        properties: {
+                            "id": String(
+                                String {
+                                    metadata: Metadata {
+                                        description: Some(
+                                            "unique ID",
+                                        ),
+                                    },
+                                    format: None,
+                                    default: None,
+                                    value: None,
+                                    min_length: None,
+                                    max_length: None,
+                                    min_graphemes: None,
+                                    max_graphemes: None,
+                                    known_values: None,
+                                    values: None,
+                                },
+                            ),
+                            "body": Ref(
+                                Ref {
+                                    metadata: Metadata {
+                                        description: None,
+                                    },
+                                    target: RefTarget {
+                                        ns: None,
+                                        name: Some(
+                                            "body",
+                                        ),
+                                    },
+                                },
+                            ),
+                            "createdAt": String(
+                                String {
+                                    metadata: Metadata {
+                                        description: None,
+                                    },
+                                    format: Some(
+                                        Datetime,
+                                    ),
+                                    default: None,
+                                    value: None,
+                                    min_length: None,
+                                    max_length: None,
+                                    min_graphemes: None,
+                                    max_graphemes: None,
+                                    known_values: None,
+                                    values: None,
+                                },
+                            ),
+                        },
+                        required: [
+                            "id",
+                            "body",
+                        ],
+                        nullable: [],
+                    },
+                ),
+            },
+        ),
+        "body": Object(
+            Object {
+                metadata: Metadata {
+                    description: None,
+                },
+                properties: {
+                    "text": String(
+                        String {
+                            metadata: Metadata {
+                                description: None,
+                            },
+                            format: None,
+                            default: None,
+                            value: None,
+                            min_length: None,
+                            max_length: Some(
+                                3000,
+                            ),
+                            min_graphemes: None,
+                            max_graphemes: Some(
+                                300,
+                            ),
+                            known_values: None,
+                            values: None,
+                        },
+                    ),
+                    "languages": Array(
+                        Array {
+                            metadata: Metadata {
+                                description: None,
+                            },
+                            items: String(
+                                String {
+                                    metadata: Metadata {
+                                        description: None,
+                                    },
+                                    format: Some(
+                                        Language,
+                                    ),
+                                    default: None,
+                                    value: None,
+                                    min_length: None,
+                                    max_length: Some(
+                                        5,
+                                    ),
+                                    min_graphemes: None,
+                                    max_graphemes: None,
+                                    known_values: None,
+                                    values: None,
+                                },
+                            ),
+                            min_length: None,
+                            max_length: Some(
+                                3,
+                            ),
+                        },
+                    ),
+                },
+                required: [
+                    "text",
+                ],
+                nullable: [],
+            },
+        ),
+    },
+}

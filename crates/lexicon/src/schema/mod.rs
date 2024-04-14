@@ -12,3 +12,7 @@ pub use self::{
     id::{Nsid, TypeId},
     meta::{Metadata, Ref, Token, Union, Unknown},
 };
+
+use crate::Map;
+
+pub type Schema = Map<Nsid, Document>;

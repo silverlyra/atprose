@@ -23,6 +23,16 @@ pub struct Record {
     pub def: RecordDefinition,
 }
 
+impl Record {
+    pub fn new(key: RecordKey, def: Object) -> Self {
+        Self {
+            metadata: Default::default(),
+            key,
+            def: RecordDefinition::Object(def),
+        }
+    }
+}
+
 /// The [key format][rkey] of a [`Record`].
 ///
 /// [rkey]: https://atproto.com/specs/record-key
@@ -135,7 +145,7 @@ pub enum ArrayItem {
 /// An [`object`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#object
-#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
+#[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Default, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Object {
     #[serde(flatten)]
@@ -143,10 +153,10 @@ pub struct Object {
 
     pub properties: Map<std::string::String, Property>,
 
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub required: Vec<std::string::String>,
 
-    #[serde(skip_serializing_if = "Vec::is_empty")]
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub nullable: Vec<std::string::String>,
 }
 

@@ -46,6 +46,15 @@ pub struct RefTarget {
 }
 
 impl RefTarget {
+    pub fn new(ns: Option<Nsid>, name: impl Into<String>) -> Self {
+        let name: String = name.into();
+
+        Self {
+            ns,
+            name: (!name.is_empty()).then_some(name),
+        }
+    }
+
     pub fn ns(&self) -> Option<&Nsid> {
         self.ns.as_ref()
     }
@@ -127,4 +136,25 @@ pub struct Token {
 pub struct Unknown {
     #[serde(flatten)]
     pub metadata: Metadata,
+}
+
+#[cfg(test)]
+mod test {
+    use super::RefTarget;
+    use crate::schema::Nsid;
+
+    #[test]
+    fn test_ref_target_from_str() {
+        assert_eq!(
+            "#viewRecord".parse::<RefTarget>().unwrap(),
+            RefTarget::new(None, "viewRecord")
+        );
+
+        assert_eq!(
+            "app.bsky.feed.defs#generatorView"
+                .parse::<RefTarget>()
+                .unwrap(),
+            RefTarget::new(Some(Nsid::new("app.bsky.feed", "defs")), "generatorView")
+        );
+    }
 }
