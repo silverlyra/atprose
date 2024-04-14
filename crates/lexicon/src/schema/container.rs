@@ -33,6 +33,14 @@ impl Record {
     }
 }
 
+impl std::ops::Deref for Record {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// The [key format][rkey] of a [`Record`].
 ///
 /// [rkey]: https://atproto.com/specs/record-key
@@ -126,6 +134,14 @@ pub struct Array {
     pub max_length: Option<usize>,
 }
 
+impl std::ops::Deref for Array {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// The type of an [array][Array]'s items.
 #[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(tag = "type", rename_all = "kebab-case")]
@@ -158,6 +174,14 @@ pub struct Object {
 
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub nullable: Vec<std::string::String>,
+}
+
+impl std::ops::Deref for Object {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 /// A property of an [object][Object].

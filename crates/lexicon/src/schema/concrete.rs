@@ -11,6 +11,14 @@ pub struct Null {
     pub metadata: Metadata,
 }
 
+impl std::ops::Deref for Null {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// A [`boolean`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#boolean
@@ -24,6 +32,14 @@ pub struct Boolean {
 
     #[serde(rename = "const", skip_serializing_if = "Option::is_none")]
     pub value: Option<bool>,
+}
+
+impl std::ops::Deref for Boolean {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 /// An [`integer`][spec] type.
@@ -48,6 +64,14 @@ pub struct Integer {
 
     #[serde(rename = "enum", skip_serializing_if = "Option::is_none")]
     pub values: Option<Vec<i64>>,
+}
+
+impl std::ops::Deref for Integer {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 /// A [`string`][spec] type.
@@ -85,6 +109,14 @@ pub struct String {
 
     #[serde(rename = "enum", skip_serializing_if = "Option::is_none")]
     pub values: Option<Vec<std::string::String>>,
+}
+
+impl std::ops::Deref for String {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 /// A [`String`] [format][spec].
@@ -149,6 +181,14 @@ pub struct Blob {
     pub max_size: Option<usize>,
 }
 
+impl std::ops::Deref for Blob {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// A [`bytes`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#bytes
@@ -165,6 +205,14 @@ pub struct Bytes {
     pub max_length: Option<usize>,
 }
 
+impl std::ops::Deref for Bytes {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// A [`cid-link`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#cid-link
@@ -172,4 +220,12 @@ pub struct Bytes {
 pub struct Link {
     #[serde(flatten)]
     pub metadata: Metadata,
+}
+
+impl std::ops::Deref for Link {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }

@@ -23,6 +23,14 @@ pub struct Query {
     pub errors: Option<Vec<Notice>>,
 }
 
+impl std::ops::Deref for Query {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 #[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Procedure {
@@ -42,6 +50,14 @@ pub struct Procedure {
     pub errors: Option<Vec<Notice>>,
 }
 
+impl std::ops::Deref for Procedure {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 #[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
 #[serde(rename_all = "camelCase")]
 pub struct Body {
@@ -52,6 +68,14 @@ pub struct Body {
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub schema: Option<BodySchema>,
+}
+
+impl std::ops::Deref for Body {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 #[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]
@@ -79,6 +103,14 @@ pub struct Parameters {
 
     #[serde(skip_serializing_if = "Vec::is_empty")]
     pub required: Vec<std::string::String>,
+}
+
+impl std::ops::Deref for Parameters {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 #[derive(Deserialize, Serialize, PartialEq, Eq, Clone, Debug)]

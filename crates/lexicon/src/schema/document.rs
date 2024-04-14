@@ -61,6 +61,14 @@ impl Document {
     }
 }
 
+impl std::ops::Deref for Document {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// Lexicon language version used in a [`Document`].
 #[derive(Deserialize, Serialize, PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
 pub struct Version(pub u32);

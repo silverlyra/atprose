@@ -23,6 +23,14 @@ pub struct Ref {
     pub target: RefTarget,
 }
 
+impl std::ops::Deref for Ref {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// A [`union`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#union
@@ -36,6 +44,14 @@ pub struct Union {
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub closed: Option<bool>,
+}
+
+impl std::ops::Deref for Union {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 /// A named type referenced by a [`Ref`] or [`Union`].
@@ -129,6 +145,14 @@ pub struct Token {
     pub metadata: Metadata,
 }
 
+impl std::ops::Deref for Token {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
+}
+
 /// An [`unknown`][spec] type.
 ///
 /// [spec]: https://atproto.com/specs/lexicon#unknown
@@ -136,6 +160,14 @@ pub struct Token {
 pub struct Unknown {
     #[serde(flatten)]
     pub metadata: Metadata,
+}
+
+impl std::ops::Deref for Unknown {
+    type Target = Metadata;
+
+    fn deref(&self) -> &Self::Target {
+        &self.metadata
+    }
 }
 
 #[cfg(test)]
