@@ -1,9 +1,10 @@
 use serde::{Deserialize, Serialize};
 
+use atprose_types::{Nsid, TypeId};
+
 use super::{
     concrete::{Blob, Boolean, Bytes, Integer, Link, String},
     container::{Array, Object, Record},
-    id::{Nsid, TypeId},
     meta::{Metadata, Ref, Union, Unknown},
     rpc::{Procedure, Query},
 };

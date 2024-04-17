@@ -9,13 +9,21 @@ license = "Apache-2.0"
 
 [workspace.dependencies]
 bytes = { version = "^1.4.0" }
+chrono = { version = "^0.4" }
+cid = { version = "^0.11" }
+data-encoding = { version = "^2.3.3" }
+data-encoding-macro = { version = "^0.1.14" }
 derive_more = { version = "^0.99.8" }
+http = { version = "1" }
 indexmap = { version = "^2.2.1", features = ["serde"] }
+oxilangtag = { version = "^0.1" }
 serde = { version = "^1.0.100" }
 serde_json = { version = "^1.0.85", features = ["preserve_order"] }
+serde_urlencoded = { version = "^0.7.1" }
 thiserror = { version = "^1.0.40" }
 tinyvec = { version = "^1.5.1" }
 tracing = { version = "^0.1.25" }
+url = { version = "^2.2" }
 
 # [package]
 # name = "atprose"

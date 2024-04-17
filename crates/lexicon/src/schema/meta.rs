@@ -93,9 +93,9 @@ impl FromStr for RefTarget {
         let (ns, name) = match s.split_once('#') {
             Some(("", "")) | Some(("", "main")) => (None, None),
             Some(("", name)) => (None, Some(name)),
-            Some((ns, "main")) => (Some(ns.parse()?), None),
-            Some((ns, name)) => (Some(ns.parse()?), Some(name)),
-            None => (Some(s.parse()?), None),
+            Some((ns, "main")) => (Some(ns.parse().map_err(|_| ())?), None),
+            Some((ns, name)) => (Some(ns.parse().map_err(|_| ())?), Some(name)),
+            None => (Some(s.parse().map_err(|_| ())?), None),
         };
 
         Ok(Self {

@@ -1,0 +1,31 @@
+[package]
+name = "atprose-types"
+version = "0.0.1"
+edition = "2021"
+repository.workspace = true
+authors.workspace = true
+license.workspace = true
+readme = "Readme.md"
+
+[features]
+default = ["chrono", "language", "plc", "rkey", "serde"]
+chrono = ["dep:chrono"]
+language = ["dep:oxilangtag"]
+plc = ["dep:fast32"]
+rkey = ["dep:fast32"]
+serde = ["dep:serde", "chrono?/serde", "cid/serde", "oxilangtag?/serialize"]
+
+[dependencies]
+chrono = { workspace = true, optional = true }
+cid = { workspace = true }
+fast32 = { version = "1", optional = true }
+data-encoding = { workspace = true, optional = true }
+data-encoding-macro = { workspace = true, optional = true }
+oxilangtag = { workspace = true, optional = true }
+percent-encoding = { version = "^2.3.0" }
+serde = { workspace = true, optional = true }
+thiserror = { workspace = true }
+
+[package.metadata.docs.rs]
+all-features = true
+rustdoc-args = ["--cfg", "docsrs"]

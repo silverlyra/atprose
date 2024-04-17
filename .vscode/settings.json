@@ -1,12 +1,16 @@
 {
   "cSpell.words": [
     "atprose",
+    "chrono",
     "datetime",
     "docsrs",
     "indexmap",
     "Nsid",
+    "oxilangtag",
+    "rkey",
     "rsplit",
-    "rustdoc"
+    "rustdoc",
+    "thiserror"
   ],
   "rust-analyzer.showUnlinkedFileNotification": false
 }

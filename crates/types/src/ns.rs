@@ -1,11 +1,12 @@
-use std::{fmt::Display, ops::Deref, str::FromStr};
+use std::{fmt, ops::Deref, str::FromStr};
 
+#[cfg(feature = "serde")]
 use serde::{Deserialize, Serialize};
 
 /// A Lexicon [NSID][] (e.g., `app.bsky.feed.post`).
 ///
 /// ```
-/// use atprose_lexicon::schema::Nsid;
+/// use atprose_types::Nsid;
 ///
 /// # fn main() -> Result<(), ()> {
 /// let id: Nsid = "app.bsky.feed.post".parse()?;
@@ -14,7 +15,7 @@ use serde::{Deserialize, Serialize};
 /// # Ok(())
 /// # }
 /// ```
-#[derive(Hash, PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
+#[derive(PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Debug)]
 pub struct Nsid {
     pub authority: String,
     pub package: String,
@@ -38,34 +39,38 @@ impl<S: Into<String>> From<(S, S)> for Nsid {
 }
 
 impl FromStr for Nsid {
-    type Err = (); // TODO(lyra)
+    type Err = InvalidNsid;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         if let Some((authority, package)) = s.rsplit_once('.') {
             Ok(Self::new(authority, package))
         } else {
-            Err(())
+            Err(InvalidNsid::Authority)
         }
     }
 }
 
+#[cfg(feature = "serde")]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 impl<'de> Deserialize<'de> for Nsid {
     fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
     where
         D: serde::Deserializer<'de>,
     {
-        let s = std::string::String::deserialize(deserializer)?;
+        let s = String::deserialize(deserializer)?;
         s.parse()
             .map_err(|_| serde::de::Error::custom("unknown record key"))
     }
 }
 
-impl Display for Nsid {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for Nsid {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         write!(f, "{}.{}", self.authority, self.package)
     }
 }
 
+#[cfg(feature = "serde")]
+#[cfg_attr(docsrs, doc(cfg(feature = "serde")))]
 impl Serialize for Nsid {
     fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
     where
@@ -75,9 +80,34 @@ impl Serialize for Nsid {
     }
 }
 
-#[derive(Hash, PartialEq, Eq, PartialOrd, Ord, Clone, Debug)]
+#[derive(thiserror::Error, PartialEq, Eq, PartialOrd, Ord, Debug, Clone)]
+pub enum InvalidNsid {
+    #[error("invalid nsid authority")]
+    Authority,
+}
+
+/// A lexicon type, identified by its [namespace][Nsid] and local name.
+///
+/// ```
+/// use atprose_types::TypeId;
+///
+/// # fn main() -> Result<(), ()> {
+/// let id: TypeId = "app.bsky.feed.post".parse()?;
+/// assert_eq!(id.authority, "app.bsky.feed");
+/// assert_eq!(id.package, "post");
+/// assert_eq!(id.name, None);
+///
+/// let id: TypeId = "app.bsky.feed.defs#postView".parse()?;
+/// assert_eq!(id.authority, "app.bsky.feed");
+/// assert_eq!(id.package, "defs");
+/// assert_eq!(id.name, Some("postView".to_owned()));
+/// # Ok(())
+/// # }
+/// ```
+#[derive(PartialEq, Eq, PartialOrd, Ord, Hash, Clone, Debug)]
 pub struct TypeId {
     pub ns: Nsid,
+    /// The local name, or `None` if the name was `"main"`.
     pub name: Option<String>,
 }
 
@@ -114,20 +144,22 @@ impl TypeId {
 }
 
 impl FromStr for TypeId {
-    type Err = (); // TODO(lyra)
+    type Err = InvalidNsid;
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
-        if let Some((nsid, name)) = s.split_once('#') {
-            if let Ok(nsid) = nsid.parse() {
-                return Ok(Self::new(nsid, Some(name.to_owned())));
-            }
-        }
-        Err(())
+        let (ns, name) = match s.rsplit_once('#') {
+            Some((ns, "main")) => (ns, None),
+            Some((ns, name)) => (ns, Some(name.to_owned())),
+            None => (s, None),
+        };
+
+        let nsid = ns.parse()?;
+        Ok(Self::new(nsid, name))
     }
 }
 
-impl Display for TypeId {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+impl fmt::Display for TypeId {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match (&self.ns, self.name.as_ref()) {
             (ns, None) => write!(f, "{ns}"),
             (ns, Some(name)) => write!(f, "{ns}:{name}"),
